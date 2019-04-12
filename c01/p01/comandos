@@ -1,0 +1,17 @@
+kubectl run --restart=Never --image=nginx:alpine mipod
+
+kubectl run --restart=Never --image=mendhak/http-https-echo echo --dry-run -o yaml
+
+kubectl run --image=nginx:1.14.0-alpine web --dry-run -o yaml >web-deploy.yaml
+kubectl apply -f web-deploy.yaml
+kubectl get deploy,rs,pod
+
+kubectl set image deployment web web=nginx:1.14.1-alpine --all
+sed -i -e /nginx:/s/1.14.0/1.14.1/ -e /replicas:/s/1/5/ web-deploy.yaml
+
+kubectl apply -f web-deploy.yaml
+kubectl rollout status web
+kubectl rollout history web
+
+
+kubectl rollout undo web
