@@ -1,24 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  creationTimestamp: null
   labels:
     run: echo
   name: echo
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       run: echo
-  strategy: {}
   template:
     metadata:
-      creationTimestamp: null
       labels:
         run: echo
     spec:
       containers:
       - image: mendhak/http-https-echo
         name: echo
-        resources: {}
-status: {}
